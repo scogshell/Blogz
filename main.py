@@ -18,39 +18,50 @@ class Blog(db.Model):
         self.title = title
         self.body = body
 
+@app.route('/blog', methods=['GET', 'POST'])
+def blog():
+
     
-@app.route('/request',method=[GET,POST])
-def add_blog(): 
+    blog_id = request.args.get("id")
+    if request.args:
+        blog = Blog.query.get(blog_id)
+        return render_template('newblog.html', blog=blog)
 
+    else:
+        blogs = Blog.query.all()
 
-    return render_template
-
-@app.route(/blog', methods=GET,POST]))
-def index(): A
-    blog_id =request.args.get("id")
-    blog= Blog.query.get(blog_id)
-
-    return ren'der_template('blogentry.html',blog=blog)
-else:
-    blogs=Blog.query.all()
-
-    return render_template('blog.html', title= 'build A Blog", blogs=')
-
-@app.route('/newpost')
-
-
-app.route('/', methods=['POST', 'GET'])
-def index():
-
-      if request.method == 'POST':
-  #      task = request.form['task']
-  #      tasks.append(task)
-
-#return render_template('todos.html',title="", tasks=tasks)
+        return render_template('blog.html', title="Build A Blog", blogs=blogs)
 
 
 
+@app.route('/newpost', methods=['POST', 'GET'])
+def add_blog():
+    if request.method == 'GET':
+        return render_template('newpost.html', title='Add Blog Entry')
+
+    if request.method == 'POST':
+        blog_title = request.form['title']
+        blog_body = request.form['body']
+        title_error = ""
+        body_error = ""
+
+        if len(blog_title) < 1:
+            title_error = "Hey you forgot to title this blog!"
+
+        if len(blog_body) < 1:
+            body_error = "So whats your blog about?"
+
+        if not title_error and not body_error:
+            new_blog = Blog(blog_title, blog_body)
+            db.session.add(new_blog)
+            db.session.commit()
+            newb = Blog.query.all()           
+            newbid = str(new_blog.id)
+
+            return redirect ( "/blog?id=" + newbid)
+        else:
+            return render_template('newpost.html', title="Add Blog Entry", title_error=title_error, body_error=body_error)
 
 
-#if __name__ == '__main__':
-#app.run()
+if __name__=='__main__':
+    app.run()    
