@@ -7,7 +7,7 @@
     <form method='post'>
         <label>
             Title your new blog:
-            <input type="text" name="title" value="" />
+            <input type="text" name="title" value="{{blog_title}}" />
         </label>
         <span>
             {{title_error}}
@@ -15,7 +15,7 @@
         <br>
         <label>
             Your new blog:
-            <textarea name="body" value="textarea"></textarea>
+            <textarea name="body" value="">{{blog_body}}</textarea>
         </label>
         <span class=error>
             {{body_error}}

@@ -47,10 +47,17 @@ def add_blog():
 
         if len(blog_title) < 1:
             title_error = "Hey you forgot to title this blog!"
-
+            blog_title=""
+        
         if len(blog_body) < 1:
             body_error = "So whats your blog about?"
-
+            blog_body =""
+        
+        if title_error:
+            return render_template('newpost.html', blog_body=blog_body, title_error=title_error)
+        if body_error:
+            return render_template('newpost.html',blog_title=blog_title, body_error=body_error)                
+        
         if not title_error and not body_error:
             new_blog = Blog(blog_title, blog_body)
             db.session.add(new_blog)
@@ -60,7 +67,7 @@ def add_blog():
 
             return redirect ( "/blog?id=" + newbid)
         else:
-            return render_template('newpost.html', title="Add Blog Entry", title_error=title_error, body_error=body_error)
+            return render_template('newpost.html', title="Add Blog Entry", title_error=title_error, body_error=body_error, blog_title=blog_title, blog_body=blog_body)
 
 
 if __name__=='__main__':
