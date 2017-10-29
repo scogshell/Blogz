@@ -1,0 +1,9 @@
+
+<p>Blog Users</p>
+
+
+    <div class="index">
+        {% for user in users %}
+        <h2><a href="/blog?user={{user.username}}">{{user.username}}<a></h2>
+    {%endfor%}
+</div>

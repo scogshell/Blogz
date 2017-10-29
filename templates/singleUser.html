@@ -1,0 +1,31 @@
+<!--<p>Blog Users</p>
+
+
+    <div class="singleuser">
+        {% for blog in users_blogs %}
+        <h4> Written by:<a href="./user?id={{user.id}}">{{user.username}}<a></h4>
+    {%endfor%}
+</div> -->
+
+{% extends "base.html" %}
+{% block content %}
+
+<h1> List of Blog Posts</h1>
+<!--{% if user_blogs|length == 0 %}
+<p>No entries yet</p>
+
+{% else %}-->
+
+  <ul>
+
+     {% for blog in user_blogs %}
+    <li>
+      <h2><a href="/blog?blog_id={{blog.id}}"> {{blog.title}}</a></h2>
+      <p>{{blog.body}}</p>
+      <p>Written by: <a href="/blog?user={{blog.owner.username}}"> {{blog.owner.username}}</a></p>
+    </li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+{% endblock %} 
